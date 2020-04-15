@@ -6,6 +6,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "run": "docker-compose -p rancher up -d"
+    "start": "docker-compose -p rancher up -d"
   }
 }
