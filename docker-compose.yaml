@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  rancher-server:
+    image: rancher/rancher:latest
+    command: --features=dashboard=true,istio-virtual-service-ui=true,unsupported-storage-drivers=true
+    volumes:
+      - rancher:/var/lib/rancher
+
+  nginx:
+    image: valian/docker-nginx-auto-ssl
+    restart: on-failure
+    ports:
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
+    volumes:
+      - ssl_data:/etc/resty-auto-ssl
+      - ./.htpasswd:/etc/nginx/.htpasswd
+      - ./rancher.lanisca.si.conf:/etc/nginx/conf.d/rancher.lanisce.si.conf
+    environment:
+      ALLOWED_DOMAINS: 'rancher.lanisca.si'
+
+volumes:
+  rancher:

@@ -1,0 +1,11 @@
+{
+  "name": "rancher",
+  "version": "1.0.0",
+  "repository": "git@github.com:lanisca/rancher.git",
+  "author": "fentas <jan.guth@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "run": "docker-compose -p rancher up -d"
+  }
+}
