@@ -94,11 +94,13 @@ main() {
 
   # reload sysctl
   /sbin/sysctl --system
+  service networking restart
+
   # setup iptables rules
   iptables::rules
 
   # finishing bootstrap
-  systemctl restart networking
+  systemctl restart network.target
 }
 
 # execute
