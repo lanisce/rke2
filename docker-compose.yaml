@@ -4,6 +4,7 @@ services:
   rancher-server:
     image: rancher/rancher:latest
     command: --features=dashboard=true,istio-virtual-service-ui=true,unsupported-storage-drivers=true
+    privileged: true
     volumes:
       - rancher:/var/lib/rancher
 
