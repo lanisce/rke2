@@ -1,0 +1,3 @@
+owner: root:root
+permissions: 0700
+runcmd: true

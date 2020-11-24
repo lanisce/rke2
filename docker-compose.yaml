@@ -15,10 +15,9 @@ services:
       - 0.0.0.0:443:443
     volumes:
       - ssl:/etc/resty-auto-ssl
-      - ./.htpasswd:/etc/nginx/.htpasswd
-      - ./rancher.lanisca.si.conf:/etc/nginx/conf.d/rancher.lanisca.si.conf
+      - ./nginx/rancher.lanisce.si.conf:/etc/nginx/conf.d/rancher.lanisce.si.conf
     environment:
-      ALLOWED_DOMAINS: 'rancher.lanisca.si'
+      ALLOWED_DOMAINS: 'rancher.lanisce.si'
 
 volumes:
   ssl:

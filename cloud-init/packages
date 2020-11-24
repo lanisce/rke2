@@ -1,0 +1,12 @@
+apt-transport-https
+ca-certificates
+gnupg2
+gnupg-agent
+software-properties-common
+build-essential
+fail2ban
+curl
+git
+htop
+rsync
+vim

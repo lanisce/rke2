@@ -1,0 +1,3 @@
+[submodule "vendors/cloud-init"]
+	path = vendors/cloud-init
+	url = https://github.com/lanisce/cloud-init.git

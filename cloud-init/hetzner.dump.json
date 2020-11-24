@@ -1,0 +1,51 @@
+{
+  "ssh-key": [
+    {
+      "name": "user",
+      "public-key-from-file": "/home/fentas/.ssh/id_rsa.pub",
+      "id": 2420225
+    }
+  ],
+  "floating-ip": [
+    {
+      "name": "rancher.lanisce.si",
+      "type": "ipv4",
+      "home-location": "nbg1",
+      "id": 369823
+    }
+  ],
+  "server": [
+    {
+      "name": "rancher",
+      "type": "cx21",
+      "image": "ubuntu-20.04",
+      "location": "hel1",
+      "ssh-key": 0,
+      "network": 0,
+      "#floating-ip": 0,
+      "id": 8713152
+    }
+  ],
+  "volume": [
+    {
+      "name": "rancher",
+      "size": "10",
+      "server": 0,
+      "id": 8168226
+    }
+  ],
+  "network": [
+    {
+      "name": "kubernetes",
+      "ip-range": "10.98.0.0/16",
+      "#subnets": [
+        {
+          "network-zone": "eu-central",
+          "type": "server",
+          "ip-range": "10.98.0.0/16"
+        }
+      ],
+      "id": 459431
+    }
+  ]
+}
