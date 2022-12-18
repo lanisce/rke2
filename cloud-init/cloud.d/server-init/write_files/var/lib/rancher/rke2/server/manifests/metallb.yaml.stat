@@ -1,0 +1,4 @@
+owner: root:root
+permissions: 0644
+execute: true
+execute: remote

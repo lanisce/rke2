@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -euo pipefail
+
+token="${CLOUD_PATH_TEMP}/token"
+[ -f "${token}" ] || {
+  "${CLOUD_PATH}/cloud.d/server-init/write_files/var/lib/rancher/rke2/server/$(basename "${token}")" 1>/dev/null
+}
+
+# all agent instances
+cat <<EOF
+#!/bin/bash
+intip="\$(ip --brief a show | grep -oE '10\.98\.0\.[0-9]+')"
+
+cat <<CFG
+node-ip: \${CLOUD_ENV__INTERNAL_IP:-"\${intip}"}
+server: https://rke2.local:9345
+token: $(cat "${token}")
+$(
+  [ -z "${CLOUD_ENV__LABELS-}" ] || {
+    echo "node-label:"
+    IFS=","; for label in ${CLOUD_ENV__LABELS-}; do
+      echo "  - ${label}"
+    done
+  }
+)
+CFG
+EOF

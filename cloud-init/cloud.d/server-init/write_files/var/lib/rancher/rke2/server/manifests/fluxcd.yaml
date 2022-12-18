@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fluxcd
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  creationTimestamp: null
+  name: fluxcd
+  namespace: fluxcd
+spec:
+  chart: https://github.com/fluxcd-community/helm-charts/releases/download/flux2-2.2.0/flux2-2.2.0.tgz
+  targetNamespace: fluxcd
+  bootstrap: false
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  creationTimestamp: null
+  name: fluxcd-sync
+  namespace: fluxcd
+spec:
+  chart: https://github.com/fluxcd-community/helm-charts/releases/download/flux2-sync-1.2.0/flux2-sync-1.2.0.tgz
+  targetNamespace: fluxcd
+  bootstrap: false
+  set:
+    gitRepository.spec.url: https://github.com/lanisce/cloud.git
+    gitRepository.spec.ref: {"branch":"main"}
+    kustomization.spec.force: true

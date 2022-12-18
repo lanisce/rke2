@@ -1,0 +1,3 @@
+permissions: 0600
+owner: root:root
+execute: true

@@ -1,0 +1,13 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  creationTimestamp: null
+  name: cilium
+  namespace: kube-system
+spec:
+  chart: https://github.com/cilium/charts/raw/master/cilium-1.9.3.tgz
+  bootstrap: true
+  set:
+    encryption.enabled: "true"
+    encryption.nodeEncryption: "false"
+

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+link="$(
+  netstat -i | sed -n 3p | cut -d ' ' -f1
+)"
+int_ip="${CLOUD_ENV__INTERNAL_IP}"
+
+cat <<EOF
+network:
+  version: 2
+  vlans:
+    ${link}.4000:
+      id: 4000
+      link: ${link}
+      mtu: 1400
+      addresses:
+        - ${int_ip}/24
+      routes:
+        - to: "10.98.0.0/16"
+          via: "10.98.1.1"
+EOF

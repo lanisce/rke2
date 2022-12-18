@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ -n "${CLOUD_ENV__FLOATING_IP-}" ]; then 
+cat <<EOF
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses:
+        - $(hcloud floating-ip describe "${CLOUD_ENV__FLOATING_IP}" -ojson | jq -r .ip)/32
+EOF
+fi

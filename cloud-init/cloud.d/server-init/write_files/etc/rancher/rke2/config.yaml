@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -euo pipefail
+
+token="${CLOUD_PATH_TEMP}/token"
+[ -f "${token}" ] || {
+  "${CLOUD_PATH}/cloud.d/server-init/write_files/var/lib/rancher/rke2/server/$(basename "${token}")" 1>/dev/null
+}
+
+# only init server instance
+cat <<EOF
+#!/bin/bash
+intip="\$(ip --brief a show | grep -oE '10\.98\.0\.[0-9]+')"
+extip="\$(cat /etc/netplan/60-hetzner-floating-ip.yaml | grep -oE '[0-9.]{6,15}')"
+[ -z "\${extip}" ] ||
+  echo "node-external-ip: \${extip}"
+
+cat <<CFG
+advertise-address: \${intip}
+node-ip: \${intip}
+secrets-encryption: true
+write-kubeconfig-mode: "0644"
+tls-san:
+  - rke2.local
+  - \${intip}
+kube-apiserver-arg:
+  - kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname,InternalDNS,ExternalDNS
+disable: 
+  - rke2-canal
+token: $(cat "${token}")
+$(
+  [ -z "${CLOUD_ENV__LABELS-}" ] || {
+    echo "node-label:"
+    IFS=","; for label in ${CLOUD_ENV__LABELS-}; do
+      echo "  - ${label}"
+    done
+  }
+)
+CFG
+EOF

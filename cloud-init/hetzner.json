@@ -1,19 +1,58 @@
 {
   "ssh-key": [
-    { "name": "user", "public-key-from-file": "${HOME}/.ssh/id_rsa.pub" }
+    {
+      "name": "jan.guth",
+      "public-key-from-file": "${CLOUD_PATH_PUB}/jan.guth.pub"
+    }
   ],
-  "floating-ip": [
-    { "name": "rancher.lanisce.si", "type": "ipv4", "home-location": "nbg1" }
-  ],
+  "floating-ip": [ ],
   "server": [
-    { "name": "rancher", "type": "cx21", "image": "ubuntu-20.04", "location": "hel1", "ssh-key": 0, "network": 0, "#floating-ip": 0 }
-  ],
-  "volume": [
-    { "name": "rancher", "size": "10", "server": 0 }
+    { "name": "api-server-01", "#cloud.d": "server-init:server",
+      "type": "cpx21", "image": "ubuntu-22.04", "location": "fsn1", "network": 0, "ssh-key": [ 0 ]
+    },
+    { 
+      "name": "api-server-02", "#cloud.d": "server", 
+      "type": "cpx21", "image": "ubuntu-22.04", "location": "nbg1", "network": 0, "ssh-key": [ 0 ]
+    },
+    { 
+      "name": "api-server-03", "#cloud.d": "server",
+      "type": "cpx21", "image": "ubuntu-22.04", "location": "hel1", "network": 0, "ssh-key": [ 0 ]
+    },
+    { 
+      "name": "backup-secrets",
+      "type": "cpx11", "image": "ubuntu-22.04", "location": "fsn1", "network": 0, "ssh-key": [ 0 ], "volumes": 0,
+      "#labels": "lanisce.si/secrets=1"
+    },
+    {
+      "name": "agent-storagex-01", "#cloud.root": "true", "#cloud.d": "root-server",
+      "#external-ip": "65.21.135.115", "#internal-ip": "10.98.1.10",
+      "network": 0, "ssh-key": [ 0 ],
+      "#labels": "lanisce.si/storage=1,lanisce.si/storagex=1,lanisce.si/runner=base"
+    },
+    {
+      "name": "agent-storage-01", "#cloud.root": "true", "#cloud.d": "root-server",
+      "#external-ip": "142.132.223.174", "#internal-ip": "10.98.1.11",
+      "network": 0, "ssh-key": [ 0 ],
+      "#labels": "lanisce.si/storage=1,lanisce.si/runner=base"
+    },
+    {
+      "name": "agent-storage-02", "#cloud.root": "true", "#cloud.d": "root-server",
+      "#external-ip": "46.4.97.145", "#internal-ip": "10.98.1.12",
+      "network": 0, "ssh-key": [ 0 ],
+      "#labels": "lanisce.si/storage=1,lanisce.si/runner=base"
+    }
   ],
   "network": [
-    { "name": "kubernetes", "ip-range": "10.98.0.0/16", "#subnets": [
-      { "network-zone": "eu-central", "type": "server", "ip-range": "10.98.0.0/16" }
-    ] }
+    {
+      "name": "kubernetes",
+      "ip-range": "10.98.0.0/16",
+      "#subnets": [
+        { "network-zone": "eu-central", "type": "server", "ip-range": "10.98.0.0/24" },
+        { "network-zone": "eu-central", "type": "vswitch", "ip-range": "10.98.1.0/24", "vswitch-id": "29465" }
+      ]
+    }
+  ],
+  "volume": [
+    { "name": "secrets", "size": "10" }
   ]
 }

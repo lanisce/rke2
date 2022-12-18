@@ -1,0 +1,34 @@
+## ====================
+##  HARD DISK DRIVE(S):
+## ====================
+
+DRIVE1 /dev/nvme0n1
+
+## ===============
+##  SOFTWARE RAID:
+## ===============
+
+## activate software RAID?  < 0 | 1 >
+SWRAID 0
+
+## Choose the level for the software RAID < 0 | 1 | 10 >
+SWRAIDLEVEL 0
+
+## ==========
+##  HOSTNAME:
+## ==========
+
+HOSTNAME agent-storagex-01
+
+## ==========================
+##  PARTITIONS / FILESYSTEMS:
+## ==========================
+
+PART /boot ext3 512M
+PART / ext4 all
+
+## ========================
+##  OPERATING SYSTEM IMAGE:
+## ========================
+
+IMAGE /root/.oldroot/nfs/install/../images/Ubuntu-2204-jammy-amd64-base.tar.gz

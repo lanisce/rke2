@@ -1,9 +1,22 @@
-# Easy secure Rancher setup
+# lanisce.si rke2 setup
 
-This repo contains an easy way for a hetzner cloud rancher setup.
-**BUT** you have to edit everything specific to your domain.
+This repo contains an easy way for a hetzner cloud rke2 setup.
+**BUT** you have to edit everything specific to your infrastructure.
 
-- ./nginx/*
-- docker-compose.yaml
+## Stack used
 
-Also you have to point your domain manuell to the hetzner instance - floating ip. (WIP)
+- cloud-init
+- rke2
+- metallb
+- cilium
+- fluxcd
+
+on top of hetzner root and cloud server.
+
+## Setup
+
+### cloud-init
+
+### Hetzner vSwitch (connecting root server)
+
+### fluxcd

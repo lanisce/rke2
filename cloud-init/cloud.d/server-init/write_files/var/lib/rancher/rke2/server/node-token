@@ -1,0 +1,11 @@
+#!/bin/bash
+
+token="${CLOUD_PATH_TEMP}/token"
+[ ! -f "${token}" ] || {
+  cat "${token}"
+  exit 0
+}
+
+password="$(< /dev/urandom tr -dc A-Za-z0-9 | head -c"${1:-2048}")"
+echo "${password}" |
+  tee "${token}"

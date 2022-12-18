@@ -1,0 +1,1 @@
+[ tmpfs, /run/shm, "tmpfs", "ro,noexec,nosuid", "0", "0" ]
